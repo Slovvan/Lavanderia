@@ -1,5 +1,5 @@
 from flask import Flask
-from ..config import Config
+from .config import Config
 from .database.db import db
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -22,7 +22,9 @@ def create_app():
     
     #Ruteo
     from .routes.user_route import user_bp
+    from .routes.client_route import client_bp
     app.register_blueprint(user_bp)
+    app.register_blueprint(client_bp)
     CORS(app)
     
     return app

@@ -11,4 +11,17 @@ class Client(db.Model):
      created_at = db.Column(db.DateTime, default=datetime.now()) 
      
      #Relaciones inversas
-     orders = db.relationship("Order", backref="Client", lazy=True)
+     orders = db.relationship("Order", backref="clients", lazy=True)
+
+     def to_dict(self, orders:bool=False):
+          Client = {
+               "id": self.id,
+               "name": self.name,
+               "phone_number": self.phone_number,
+               "address": self.address,
+               "created_at": self.created_at,
+               
+          }
+          if orders:
+               Client["orders"] = self.orders
+          return Client

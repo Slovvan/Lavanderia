@@ -11,7 +11,7 @@ def create_user():
     
     name = data.get("name")
     email = data.get("email")
-    role = data.get("role")
+    rol = data.get("rol")
     password = data.get("password")
     
     if not name or not email or not password: 
@@ -26,7 +26,7 @@ def create_user():
         
     password_hash = generate_password_hash(password)
     
-    new_user = User(name = name, email = email, role = role, password = password_hash)
+    new_user = User(name = name, email = email, rol = rol, password = password_hash)
     
     db.session.add(new_user)
     
