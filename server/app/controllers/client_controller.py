@@ -6,3 +6,28 @@ def create_client(name, phone_number, address):
     db.session.add(new_client)
     db.session.commit()
     return new_client
+#propiedad en especifico = filter(), por id = get()
+def search_client_by_name(name):
+    return Client.query.filter(Client.name.ilike(f"%{name}%")).all() #LIKE
+
+def search_client_by_phone(phone):
+    return Client.query.filter_by(phone_number=phone).first()
+
+def update_client(client_id, updated_data):
+    client = Client.query.get(client_id)
+    if not client:
+        return None
+    #ITEMS regresa dupla o arreglo
+    for key, value in updated_data.items():
+        setattr(client, key, value)
+
+    db.session.commit()
+    return Client
+
+def delete_client(client_id):
+    client = Client.query.get(client_id)
+    if not client:
+        return None
+    db.session.delete(client)
+    db.session.commit()
+    return client
