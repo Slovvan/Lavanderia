@@ -8,128 +8,73 @@ import {
 } from '@react-navigation/native';
 import axios from 'axios';
 
-export default function Client (){
+export default function Garment (){
     const navigation = useNavigation();
 
-    const [data, setData] = useState([])
+    const [garments, setGarments] = useState([
+        {name:"Camisa"},
+        {name:"Pantalon"},
+        {name:"Prenda Interior"},
+        {name:"Blusa"},
+        {name:"Vestido"},
+        {name:"Chamarra"},
+        {name:"Traje"},
+        {name:"Sueter"},
+        {name:"Falda"},
+        {name:"Saco"},
+        {name:"Playera"}
     
-    const [search, setSearch] = useState("name")
-    const [info, setInfo] = useState({
-        name: "",
-        phone: ""
-    })
-    
-    useEffect(() => {
-        getClientByName()
-    }, []);
-
+    ])
+    const [services, setService] = useState([])
+ 
     const onchange = (target, value) => {
-        const nInfo = info
-        nInfo[target] = value
-        setInfo(nInfo)
+        const nData = data
+        nData[target] = value
+        setData(nData)
     }
-    
-    const getClientByName = async () => {
-        try {
-            const res = await axios.get("https://vxx28nqw-5000.usw3.devtunnels.ms/clients/search/name", {params: {name: info.name}})
-            const client = res.data
-
-            setData(client)
-        } catch (error) {
-            console.log("Error al buscar por nombre ", error)
-        }
-    }
-
-    const getClientByPhone = async () => {
-        try {
-            const res = await axios.get("https://vxx28nqw-5000.usw3.devtunnels.ms/clients/search/phone", {params: {phone: info.phone}})
-            const client = res.data
-
-            setData([client])
-        } catch (error) {
-            console.log("Error al buscar por telefono ", error)
-        }
-    }
-
-    const deleteClient = async (id) => {
-        try {
-            await axios.delete(`https://vxx28nqw-5000.usw3.devtunnels.ms/clients/delete/${id}`)
-            if (search == "name"){
-                getClientByName()
-            } else{
-                data.pop()
-            }
-        } catch (error) {
-            console.log("Error al buscar por telefono ", error)
-        }
-    }
-
 
     return (
             <View style={style.container}>
-                <Text style={style.title}>Clientes</Text>
-                <TouchableOpacity  onPress={()=>{navigation.navigate("createClient")}}>
-                        <Text style={style.createButton}>➕</Text>
-                </TouchableOpacity>
-
-                <View style={style.search}>
-                    <TextInput style={style.searchBar} placeholder=' Buscar Cliente' onChangeText={(text)=>{onchange(search, text)}}></TextInput>
-                    <TouchableOpacity style={style.searchButton} onPress={()=>{search == "phone" ? getClientByPhone() : getClientByName()}}>
-                        <Text>🔎</Text>
+                <View style={style.form}>
+                     <Text style={style.title}>Crear Prenda</Text>
+                        <TextInput onChangeText={(text)=>{onchange("name", text)}} style={style.input} placeholder='Escribe el Nombre '></TextInput>
+                       
+                    <TouchableOpacity style={style.button} onPress={()=>{onSubmit()}} >
+                        <Text style={style.button.textButton}>Crear</Text>
                     </TouchableOpacity>
-                     <Picker
-                        selectedValue={search}
-                        onValueChange={(itemValue) => setSearch(itemValue)}
-                        style={style.select}
-                        >
-                        <Picker.Item label="Nombre" value="name" />
-                        <Picker.Item label="Teléfono" value="phone" />
-                        </Picker>
                 </View>
-
+                
                <ScrollView style={style.table}>
                 <Grid>
                     <Row style={style.rowHeader}>
-                    <Col><Text style={style.headerText}>ID</Text></Col>
-                    <Col><Text style={style.headerText}>Nombre</Text></Col>
-                    <Col><Text style={style.headerText}>Teléfono</Text></Col>
-                    <Col><Text style={style.headerText}>Dirección</Text></Col>
-                    <Col><Text style={style.headerText}>Fecha</Text></Col>
-                    <Col><Text style={style.headerText}>Acciones</Text></Col>
+                    <Col><Text style={style.headerText}>Prendas</Text></Col>
                     </Row>
 
-                    {data.map((client, i) => (
-                    <Pressable onPress={() => navigation.navigate("createOrder", { client })}>
-
+                    {garments.map((garment, i) => (
                     <Row
-                        key={client.id}
+                        key={garment.id}
                         style={[style.row, i % 2 === 0 && style.zebraRow]}
                         >
-                        <Col><Text style={style.colText}>{client.id}</Text></Col>
-                        <Col><Text style={style.colText}>{client.name}</Text></Col>
-                        <Col><Text style={style.colText}>{client.phone_number}</Text></Col>
-                        <Col><Text style={style.colText}>{client.address}</Text></Col>
-                        <Col><Text style={style.colText}>{client.created_at}</Text></Col>
+                        <Col><Text style={style.colText}>{garment.name}</Text></Col>
                         <Col>
                         <TouchableOpacity
                             style={style.update}
-                            onPress={() => navigation.navigate("updateClient", { client })}
+                            onPress={() => navigation.navigate("updateClient", { garment })}
                         >
                             <Text style={{ color: "white", fontSize: 12 }}>Actualizar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={style.delete}
-                            onPress={() => deleteClient(client.id)}
+                            onPress={() => deleteClient(garment.id)}
                         >
                             <Text style={{ color: "white", fontSize: 12 }}>Eliminar</Text>
                         </TouchableOpacity>
                         </Col>
                     </Row>
-                        </Pressable>
                     ))}
                 </Grid>
                 </ScrollView>
-            </View>
+        </View>
     )
 }
 
@@ -195,12 +140,6 @@ const style = StyleSheet.create({
         borderColor: "#ccc"
     }, 
 
-    name: {
-        fontSize: 15,
-        fontWeight: "bold",
-        marginVertical: 5,
-    },
-
     button: {
         backgroundColor: "#5e0acc",
         width: "100%",
@@ -216,6 +155,7 @@ const style = StyleSheet.create({
         borderColor: "#aaa",
         borderWidth: 1,
         textAlign: "center",
+        backgroundColor: "white",
         width: "100%",
         padding: 10,
     },

@@ -278,12 +278,12 @@ export default function CreateOrder(){
                  {order.garments?.map((garment, i) => (
                     <View key={i}>
                         <Text style={styles.total}>
-                        {garment.type}
+                       {garment.type}
                         </Text>
 
                         {garment.services?.map((service, j) => (
                         <Text key={j} style={styles.total}>
-                            -----{service.name} - {service.quantity} x ${service.unitPrice}
+                            ----- {service.name} - {service.quantity} x ${service.unitPrice} -----
                         </Text>
                         ))}
                     </View>
@@ -302,66 +302,109 @@ export default function CreateOrder(){
 }
 
 const styles = StyleSheet.create({
-  container: { 
+ container: {
     padding: 16,
-    backgroundColor: "#3b0a55" },
-  card: {
-    padding: 16,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    elevation: 2,
-    marginBottom: 16,
+    backgroundColor: "#3b0a55",
   },
-  title: { fontSize: 20, fontWeight: "bold", marginBottom: 12 },
-  subtitle: { fontSize: 18, marginVertical: 8 },
-  label: { fontWeight: "bold", marginTop: 8 },
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 12,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#6A1B9A",
+    marginVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#CE93D8",
+    paddingBottom: 4,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
   input: {
+    backgroundColor: "#fff",
     borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 8,
-    marginVertical: 4,
-    borderRadius: 4,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 10,
+    fontSize: 16,
+    marginVertical: 6,
+
   },
   picker: {
-    backgroundColor: "#f1f1f1",
-    marginVertical: 4,
+    backgroundColor: "#CE93D8",
+    borderRadius: 10,
+    marginVertical: 6,
+    padding: 10,
+
   },
   button: {
-    backgroundColor: "#4CAF50",
-    padding: 10,
+    backgroundColor: "#6A1B9A",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
     marginVertical: 8,
-    borderRadius: 6,
     alignItems: "center",
   },
-  buttonText: { color: "#fff" },
-  deleteButton: {
-    backgroundColor: "#f44336",
-    padding: 8,
-    marginVertical: 4,
-    borderRadius: 6,
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
-  deleteButtonText: { color: "#fff", textAlign: "center" },
+  deleteButton: {
+    backgroundColor: "#D32F2F",
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 6,
+    alignItems: "center",
+  },
+  deleteButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
   deleteText: {
-    color: "#f44336",
+    color: "#D32F2F",
     textAlign: "right",
     marginVertical: 4,
+    fontWeight: "600",
   },
   service: {
-    backgroundColor: "#f9f9f9",
-    padding: 8,
-    borderRadius: 4,
+    backgroundColor: "#f3e5f5",
+    padding: 12,
+    borderRadius: 10,
     marginVertical: 8,
   },
   total: {
     fontSize: 18,
     fontWeight: "bold",
-    marginVertical: 12,
+    marginVertical: 8,
   },
   summaryButton: {
-    backgroundColor: "purple",
-    padding: 12,
-    borderRadius: 6,
+    backgroundColor: "#8E24AA",
+    paddingVertical: 14,
+    borderRadius: 14,
     alignItems: "center",
+    marginTop: 20,
   },
-  summaryButtonText: { color: "#fff" },
+  summaryButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });
